@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for responsive design and character encoding -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Tax Calculator 2025</title>
+    <style>
+        /* Reset default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling with responsive font and background */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Main container with centered layout and shadow */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header section with gradient background */
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* Main heading styling */
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Subtitle styling */
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Form container with padding */
+        .form-container {
+            padding: 40px;
+        }
+
+        /* Input group styling with margin spacing */
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        /* Label styling with consistent appearance */
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        /* Input field styling with border and focus effects */
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        /* Input focus state styling */
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Calculate button styling with hover effects */
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        /* Button hover effect */
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Results section styling */
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #4CAF50;
+        }
+
+        /* Results heading styling */
+        .results h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        /* Results table styling */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        /* Table cell styling */
+        .results-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        /* Table header cell styling */
+        .results-table td:first-child {
+            font-weight: bold;
+            color: #555;
+            width: 60%;
+        }
+
+        /* Table value cell styling */
+        .results-table td:last-child {
+            text-align: right;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Net income row highlighting */
+        .net-income {
+            background: #e8f5e8;
+            font-size: 18px;
+        }
+
+        /* Error message styling */
+        .error {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Hidden class for showing/hiding elements */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive design for mobile devices */
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container for the entire application -->
+    <div class="container">
+        <!-- Header section with title and description -->
+        <div class="header">
+            <h1>Freelance Tax Calculator 2025</h1>
+            <p>Calculate your taxes for USA, UK, and Canada</p>
+        </div>
+
+        <!-- Form container for user inputs -->
+        <div class="form-container">
+            <!-- Annual income input field -->
+            <div class="input-group">
+                <label for="annual-income">Annual Income:</label>
+                <input type="number" id="annual-income" placeholder="Enter your annual income" min="0" step="0.01">
+                <div class="error hidden" id="income-error">Please enter a valid income amount</div>
+            </div>
+
+            <!-- Country selection dropdown -->
+            <div class="input-group">
+                <label for="country">Country:</label>
+                <select id="country">
+                    <option value="">Select your country</option>
+                    <option value="usa">United States</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="canada">Canada</option>
+                </select>
+                <div class="error hidden" id="country-error">Please select a country</div>
+            </div>
+
+            <!-- Calculate button -->
+            <button class="calculate-btn" onclick="calculateTax()">Calculate Tax</button>
+
+            <!-- Results section (initially hidden) -->
+            <div class="results hidden" id="results">
+                <h2>Tax Calculation Results</h2>
+                <table class="results-table">
+                    <tr>
+                        <td>Gross Income:</td>
+                        <td id="gross-income">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Income Tax:</td>
+                        <td id="income-tax">$0.00</td>
+                    </tr>
+                    <tr id="additional-tax-row">
+                        <td id="additional-tax-label">Additional Tax:</td>
+                        <td id="additional-tax">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Total Tax:</td>
+                        <td id="total-tax">$0.00</td>
+                    </tr>
+                    <tr class="net-income">
+                        <td>Net Income:</td>
+                        <td id="net-income">$0.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tax brackets and rates for USA 2025 (updated for tax year 2025)
+        const usaTaxBrackets = [
+            { min: 0, max: 11600, rate: 0.10 },
+            { min: 11600, max: 47150, rate: 0.12 },
+            { min: 47150, max: 100525, rate: 0.22 },
+            { min: 100525, max: 191650, rate: 0.24 },
+            { min: 191650, max: 243725, rate: 0.32 },
+            { min: 243725, max: 609350, rate: 0.35 },
+            { min: 609350, max: Infinity, rate: 0.37 }
+        ];
+
+        // Self-employment tax rates for USA 2025
+        const usaSelfEmploymentTax = {
+            socialSecurityRate: 0.124, // 12.4% for Social Security
+            medicareRate: 0.029, // 2.9% for Medicare
+            socialSecurityLimit: 168600, // Social Security wage base limit for 2025
+            additionalMedicareRate: 0.009, // Additional 0.9% Medicare tax
+            additionalMedicareThreshold: 200000 // Threshold for additional Medicare tax
+        };
+
+        // UK tax bands for 2025-26 tax year
+        const ukTaxBands = [
+            { min: 0, max: 12570, rate: 0.00 }, // Personal allowance
+            { min: 12570, max: 50270, rate: 0.20 }, // Basic rate
+            { min: 50270, max: 125140, rate: 0.40 }, // Higher rate
+            { min: 125140, max: Infinity, rate: 0.45 } // Additional rate
+        ];
+
+        // UK National Insurance rates for 2025-26
+        const ukNationalInsurance = {
+            class2Rate: 3.45, // Weekly rate for Class 2 NI
+            class2Threshold: 6515, // Annual threshold for Class 2 NI
+            class4Rate: 0.09, // 9% Class 4 NI rate
+            class4LowerLimit: 12570, // Lower earnings limit for Class 4 NI
+            class4UpperLimit: 50270 // Upper earnings limit for Class 4 NI
+        };
+
+        // Canadian federal tax brackets for 2025
+        const canadaTaxBrackets = [
+            { min: 0, max: 55867, rate: 0.15 },
+            { min: 55867, max: 111733, rate: 0.205 },
+            { min: 111733, max: 173205, rate: 0.26 },
+            { min: 173205, max: 246752, rate: 0.29 },
+            { min: 246752, max: Infinity, rate: 0.33 }
+        ];
+
+        // Canadian CPP and EI rates for 2025
+        const canadaContributions = {
+            cppRate: 0.0595, // 5.95% CPP contribution rate
+            cppMaxEarnings: 71300, // Maximum pensionable earnings
+            cppBasicExemption: 3500, // Basic exemption amount
+            eiRate: 0.0229, // 2.29% EI premium rate
+            eiMaxEarnings: 68500 // Maximum insurable earnings
+        };
+
+        // Function to calculate USA federal income tax
+        function calculateUSAIncomeTax(income) {
+            let tax = 0;
+            let taxableIncome = income;
+            
+            // Calculate tax using progressive brackets
+            for (let bracket of usaTaxBrackets) {
+                if (taxableIncome <= 0) break;
+                
+                let taxableInBracket = Math.min(taxableIncome, bracket.max - bracket.min);
+                tax += taxableInBracket * bracket.rate;
+                taxableIncome -= taxableInBracket;
+            }
+            
+            return tax;
+        }
+
+        // Function to calculate USA self-employment tax
+        function calculateUSASelfEmploymentTax(income) {
+            let netEarnings = income * 0.9235; // 92.35% of net earnings subject to SE tax
+            
+            // Social Security tax calculation
+            let socialSecurityTax = Math.min(netEarnings, usaSelfEmploymentTax.socialSecurityLimit) * usaSelfEmploymentTax.socialSecurityRate;
+            
+            // Medicare tax calculation
+            let medicareTax = netEarnings * usaSelfEmploymentTax.medicareRate;
+            
+            // Additional Medicare tax for high earners
+            let additionalMedicareTax = 0;
+            if (income > usaSelfEmploymentTax.additionalMedicareThreshold) {
+                additionalMedicareTax = (income - usaSelfEmploymentTax.additionalMedicareThreshold) * usaSelfEmploymentTax.additionalMedicareRate;
+            }
+            
+            return socialSecurityTax + medicareTax + additionalMedicareTax;
+        }
+
+        // Function to calculate UK income tax
+        function calculateUKIncomeTax(income) {
+            let tax = 0;
+            let taxableIncome = income;
+            
+            // Calculate tax using progressive bands
+            for (let band of ukTaxBands) {
+                if (taxableIncome <= 0) break;
+                
+                let taxableInBand = Math.min(taxableIncome, band.max - band.min);
+                tax += taxableInBand * band.rate;
+                taxableIncome -= taxableInBand;
+            }
+            
+            return tax;
+        }
+
+        // Function to calculate UK National Insurance contributions
+        function calculateUKNationalInsurance(income) {
+            let totalNI = 0;
+            
+            // Class 2 National Insurance (flat rate for self-employed)
+            if (income >= ukNationalInsurance.class2Threshold) {
+                totalNI += ukNationalInsurance.class2Rate * 52; // Weekly rate × 52 weeks
+            }
+            
+            // Class 4 National Insurance (percentage of profits)
+            if (income > ukNationalInsurance.class4LowerLimit) {
+                let class4Earnings = Math.min(income, ukNationalInsurance.class4UpperLimit) - ukNationalInsurance.class4LowerLimit;
+                totalNI += class4Earnings * ukNationalInsurance.class4Rate;
+            }
+            
+            return totalNI;
+        }
+
+        // Function to calculate Canadian federal income tax
+        function calculateCanadaIncomeTax(income) {
+            let tax = 0;
+            let taxableIncome = income;
+            
+            // Calculate tax using progressive brackets
+            for (let bracket of canadaTaxBrackets) {
+                if (taxableIncome <= 0) break;
+                
+                let taxableInBracket = Math.min(taxableIncome, bracket.max - bracket.min);
+                tax += taxableInBracket * bracket.rate;
+                taxableIncome -= taxableInBracket;
+            }
+            
+            return tax;
+        }
+
+        // Function to calculate Canadian CPP and EI contributions
+        function calculateCanadaContributions(income) {
+            let totalContributions = 0;
+            
+            // CPP contribution calculation
+            let cppEarnings = Math.min(income, canadaContributions.cppMaxEarnings) - canadaContributions.cppBasicExemption;
+            if (cppEarnings > 0) {
+                totalContributions += cppEarnings * canadaContributions.cppRate;
+            }
+            
+            // EI contribution calculation
+            let eiEarnings = Math.min(income, canadaContributions.eiMaxEarnings);
+            totalContributions += eiEarnings * canadaContributions.eiRate;
+            
+            return totalContributions;
+        }
+
+        // Function to format currency based on country
+        function formatCurrency(amount, country) {
+            let currencyCode, locale;
+            
+            switch(country) {
+                case 'usa':
+                    currencyCode = 'USD';
+                    locale = 'en-US';
+                    break;
+                case 'uk':
+                    currencyCode = 'GBP';
+                    locale = 'en-GB';
+                    break;
+                case 'canada':
+                    currencyCode = 'CAD';
+                    locale = 'en-CA';
+                    break;
+                default:
+                    currencyCode = 'USD';
+                    locale = 'en-US';
+            }
+            
+            return new Intl.NumberFormat(locale, {
+                style: 'currency',
+                currency: currencyCode,
+                minimumFractionDigits: 2
+            }).format(amount);
+        }
+
+        // Function to validate user input
+        function validateInput() {
+            let isValid = true;
+            
+            // Get input values
+            let incomeInput = document.getElementById('annual-income');
+            let countrySelect = document.getElementById('country');
+            
+            // Clear previous errors
+            document.getElementById('income-error').classList.add('hidden');
+            document.getElementById('country-error').classList.add('hidden');
+            
+            // Validate income input
+            if (!incomeInput.value || parseFloat(incomeInput.value) < 0) {
+                document.getElementById('income-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate country selection
+            if (!countrySelect.value) {
+                document.getElementById('country-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        // Main function to calculate tax based on user input
+        function calculateTax() {
+            // Validate input before proceeding
+            if (!validateInput()) {
+                return;
+            }
+            
+            // Get user input values
+            let income = parseFloat(document.getElementById('annual-income').value);
+            let country = document.getElementById('country').value;
+            
+            let incomeTax = 0;
+            let additionalTax = 0;
+            let additionalTaxLabel = '';
+            
+            // Calculate taxes based on selected country
+            switch(country) {
+                case 'usa':
+                    incomeTax = calculateUSAIncomeTax(income);
+                    additionalTax = calculateUSASelfEmploymentTax(income);
+                    additionalTaxLabel = 'Self-Employment Tax:';
+                    break;
+                    
+                case 'uk':
+                    incomeTax = calculateUKIncomeTax(income);
+                    additionalTax = calculateUKNationalInsurance(income);
+                    additionalTaxLabel = 'National Insurance:';
+                    break;
+                    
+                case 'canada':
+                    incomeTax = calculateCanadaIncomeTax(income);
+                    additionalTax = calculateCanadaContributions(income);
+                    additionalTaxLabel = 'CPP & EI Contributions:';
+                    break;
+            }
+            
+            // Calculate total tax and net income
+            let totalTax = incomeTax + additionalTax;
+            let netIncome = income - totalTax;
+            
+            // Display results in the results table
+            document.getElementById('gross-income').textContent = formatCurrency(income, country);
+            document.getElementById('income-tax').textContent = formatCurrency(incomeTax, country);
+            document.getElementById('additional-tax-label').textContent = additionalTaxLabel;
+            document.getElementById('additional-tax').textContent = formatCurrency(additionalTax, country);
+            document.getElementById('total-tax').textContent = formatCurrency(totalTax, country);
+            document.getElementById('net-income').textContent = formatCurrency(netIncome, country);
+            
+            // Show the results section
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Scroll to results section smoothly
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event listener for Enter key press on income input
+        document.getElementById('annual-income').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateTax();
+            }
+        });
+
+        // Event listener for country selection change
+        document.getElementById('country').addEventListener('change', function() {
+            // Hide results when country changes
+            document.getElementById('results').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
